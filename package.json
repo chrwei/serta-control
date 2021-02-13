@@ -1,0 +1,15 @@
+{
+  "name": "serta-control",
+  "version": "0.9.0",
+  "description": "Control Serta BLE products",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Chris Weiss",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@abandonware/noble": "^1.9.2-11",
+    "axios": "^0.21.1"
+  }
+}
