@@ -129,7 +129,7 @@ The JSON needs to be an array even if you only have one controller.  You can sen
 * `pin`: the 4 digit pin you assigned in the app.  Pin is optional for the `check` type.
 * `webhook`: Optional.  If provided, when a command completes it will POST the command to this URL.  If type is `check`, it will be replaced with `on` or `off` to reflect the state reported by the controller.
 
-Once a command completes and if a webhook is provided, a timer will issue a `check` command once a minute to report any state changes. This interval can be configured using the `checkInterval` variable in teh code. 
+Once a command completes and if a webhook is provided, a timer will issue a `check` command once a minute to report any state changes. This interval can be configured using the `checkInterval` variable in the code. 
 
 Example for 2 controllers, turn on:
 ```json
