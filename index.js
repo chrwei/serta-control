@@ -110,7 +110,7 @@ const setupDevice = async (peripheral) => {
 				let checkq;
 				if(checkq = appState.task.queue.find(q => (q.name===appState.task.current.name && q.type==="check") )) {
 					checkq.waitTill = Date.now() + appState.checkInterval;
-				} else if(appState.webhook) {
+				} else if(appState.task.current.webhook) {
 					let data = {
 						alias: appState.task.current.alias,
 						name: appState.task.current.name,
