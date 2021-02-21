@@ -99,12 +99,8 @@ You should see output
 HTTP Server started on 8321
 ```
 
-If you need to use a different port, edit index.js and find the httpPort variable.  You can also increase the level of output, which is handy for testing.
-```javascript
-//base configuration
-const httpPort = 8321; //HTTP port to listen on
-const loglevel = 1; //0:minimal, 1:add connection info, 2:add tasks, 3:add command processing 
-```
+If you need to use a different port, copy the `config.yaml.sample` file and name it `config.yaml` and edit as needed.  The file has comments about each option.
+
 For the first test, open http://localhost:8321/ (or whatever your server name or IP is), you should see "Post only" as only HTTP POST commands are implemented at this time.
 
 Now use your favorite language or http testing tool to send commands to the server.
@@ -129,7 +125,7 @@ The JSON needs to be an array even if you only have one controller.  You can sen
 * `pin`: the 4 digit pin you assigned in the app.  Pin is optional for the `check` type.
 * `webhook`: Optional.  If provided, when a command completes it will POST the command to this URL.  If type is `check`, it will be replaced with `on` or `off` to reflect the state reported by the controller.
 
-Once a command completes and if a webhook is provided, a timer will issue a `check` command once a minute to report any state changes. This interval can be configured using the `checkInterval` variable in the code. 
+Once a command completes and if a webhook is provided, a timer will issue a `check` command once a minute to report any state changes. This interval can be configured in the `config.yaml` file. 
 
 Example for 2 controllers, turn on:
 ```json
@@ -152,7 +148,7 @@ Example for 1 controller, turn off, no webhook:
 * Only one controller can be communicated with at once, so commands are done sequentially.
 * Commands are done in the order the bluetooth scan finds them, not the order you submit. 
 * Controllers seem to disconnect at random.  Retries should happen automatically, and indefinatly.
-* Retry will not skip a controller, it will keep retying until it works, leaving the other in the queue.  I have yet to see it take more than 3 tries.
+* Retry will not skip a controller, it will keep retying until it works, leaving the other in the queue.  I have yet to see it take more than 3 tries.  The timeout to retry can be adjusted in the `config.yaml` file.
 
 <!-- CONTRIBUTING -->
 ## Contributing

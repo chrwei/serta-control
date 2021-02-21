@@ -1,0 +1,16 @@
+#http server component
+http:
+  #port to listen on
+  port: 8123
+
+#logging/output
+log:
+  #0:minimal, 1:add connection info, 2:add tasks, 3:add command processing
+  level: 1
+
+#protocol and communications related
+serta:
+  #milliseconds to wait before forcing a retry 
+  scan_timeout: 5000
+  #milliseconds between check intervals.  Zero disables the check interval
+  check_interval: 60000

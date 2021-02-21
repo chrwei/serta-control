@@ -9,10 +9,24 @@ process.on('unhandledRejection', error => {
 const http = require('http');
 const noble = require('@abandonware/noble');
 const axios = require('axios');
+const fs = require('fs');
+const YAML = require('yaml');
+
+//to override the default config, copy config.yaml.sample to config.yaml and edit as needed
+const config = fs.existsSync("./config.yaml") 
+	? YAML.parse(fs.readFileSync("./config.yaml", "utf8"))
+	: {
+		http: { port: 8123 },  //HTTP port to listen on
+		log: { level: 1 }, //0:minimal, 1:add connection info, 2:add tasks, 3:add command processing
+		serta: { 
+			scan_timeout: 5000, //5 seconds 
+			check_interval: 60000  //1 minute 
+		}
+	};
 
 //base configuration
-const httpPort = 8321; //HTTP port to listen on
-const loglevel = 1; //0:minimal, 1:add connection info, 2:add tasks, 3:add command processing 
+const httpPort = config.http.port;
+const loglevel = config.log.level;
 
 // shoudln't need to edit below here
 
@@ -23,8 +37,8 @@ const appState = {
 		queue: [],
 	},
 	timers: {},
-	timeout: 5000, //5 seconds
-	checkInterval: 60000 //1 minute
+	timeout: config.serta.scan_timeout, 
+	checkInterval: config.serta.check_interval,
 };
 
 //UUIDs found via noble's scan examples.
@@ -110,7 +124,7 @@ const setupDevice = async (peripheral) => {
 				let checkq;
 				if(checkq = appState.task.queue.find(q => (q.name===appState.task.current.name && q.type==="check") )) {
 					checkq.waitTill = Date.now() + appState.checkInterval;
-				} else if(appState.task.current.webhook) {
+				} else if(appState.task.current.webhook && appState.checkInterval > 0) {
 					let data = {
 						alias: appState.task.current.alias,
 						name: appState.task.current.name,
