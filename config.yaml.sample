@@ -1,7 +1,7 @@
 #http server component
 http:
   #port to listen on
-  port: 8123
+  port: 8321
 
 #logging/output
 log:
